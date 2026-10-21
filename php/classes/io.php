@@ -7,7 +7,7 @@ class io {
 	var $hash;
 
 	# Constructor
-	function io ($inFilename) {
+	function __construct ($inFilename) {
 		$this->filename = strtolower($inFilename);
 		$this->constructHash();
 	}
@@ -52,8 +52,10 @@ class io {
 				$output .= strtolower($key)."=".rawurlencode($value)."\n";	
 			}
 			$fp = @fopen($this->filename,"w");
+			if ($fp) {
 				@fwrite($fp, $output);
-			@fclose($fp);
+				@fclose($fp);
+			}
 		}
 	}
 

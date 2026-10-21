@@ -10,7 +10,7 @@ class ControlPanelParse {
 	var $controlPanel;
 
 
-	function ControlPanelParse ($filename = "data/controlpanel/controlpanel") {
+	function __construct ($filename = "data/controlpanel/controlpanel") {
 		$this->fileContents = file($filename);
 		$this->controlPanel = new ControlPanel();
 	}
@@ -23,7 +23,7 @@ class ControlPanelParse {
 		
 		$fileContents = preg_replace("/\r/","",$fileContents);
 		$fileContents = preg_replace("/\n/","<br />",$fileContents);
-		$fileContents = preg_replace_callback("/\[list type=(.*?) id=(.*?) title=(.*?) level=(.*?)\]/i", array($this, parseControlPanelInput), $fileContents);
+		$fileContents = preg_replace_callback("/\[list type=(.*?) id=(.*?) title=(.*?) level=(.*?)\]/i", array($this, 'parseControlPanelInput'), $fileContents);
 		
 		$fileContents = preg_replace("/<br \/><br \/>/","<p />",$fileContents);
 		

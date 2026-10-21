@@ -1,6 +1,6 @@
 <?PHP
 	class base {
-		function getUserName () {
+		static function getUserName () {
 			$hash = $_COOKIE['sessionid'];
 			$concordance = @$_COOKIE['userid'];
 			if (($hash) && ($concordance)) {
@@ -13,7 +13,7 @@
 			}
 		}
 		
-		function getUserLevel ($username = "") {
+		static function getUserLevel ($username = "") {
 			if (!$username) {
 				$username = base::getUserName();
 			}
@@ -29,7 +29,7 @@
 			return basename($_SERVER['REQUEST_URI']);
 		}
 		
-		function getTemplateRoot () {
+		static function getTemplateRoot () {
 			return "templates/default/";
 		}
 		

@@ -49,7 +49,7 @@
 		for ($i = 1; $i; $i++) {
 			if ($pollSettings->get($i)) {
 				$thisanswerString = "answer".$i;
-				$totalReplies += $pollSettings->get($thisanswerString);
+				$totalReplies += (int) $pollSettings->get($thisanswerString);
 			}
 			else {
 				break;

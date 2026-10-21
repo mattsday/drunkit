@@ -21,8 +21,13 @@ function getMessagesArray () {
 
 		$forum_lst = "1, 2, 3, 4";
 
-		$dbConnect = mysqli_connect($server, $user, $pass, $dbn, $port) or print "Connection error".mysqli_error();
-        mysqli_select_db($dbn, $dbConnect);
+		// PHP 8.1+ throws on mysqli errors by default; keep the old return-false behaviour
+		mysqli_report(MYSQLI_REPORT_OFF);
+		$dbConnect = @mysqli_connect($server, $user, $pass, $dbn, $port);
+		if (!$dbConnect) {
+			print "Connection error ".mysqli_connect_error();
+			return array();
+		}
 
 		$sql = "SELECT t.topic_title, p.topic_id, t.topic_last_post_id, p.post_time, f.forum_name, f.forum_id,
 			       u.username, u.user_id, p.post_username, u2.username as user2, u2.user_id as id2
@@ -44,7 +49,7 @@ function getMessagesArray () {
 
         	$query = @mysqli_query($dbConnect, $sql) or print 'Error: '.mysqli_error($dbConnect);
         	$output = array();
-		while ($row = @mysqli_fetch_array($query)) {
+		while ($query && ($row = @mysqli_fetch_array($query))) {
 			$output[] = $row;
 		}
 		return $output;

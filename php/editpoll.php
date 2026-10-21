@@ -13,7 +13,7 @@
 	}
 	else {
 		if (@$_REQUEST['a'] == "update") {
-			$hash = "";
+			$hash = array();
 			$id = $_POST['id'];
 			$pollSettings = new SettingsFile("../var/Poll/".$id.".txt");
 			foreach ($_POST as $key => $value) {

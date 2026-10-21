@@ -1,4 +1,4 @@
-<?
+<?php
 	require "modules/common.php";
 	require "modules/templates.php";
 
@@ -11,8 +11,10 @@
 	}
 	else if (@$_POST['a'] == "update") {
 		$fp = @fopen($_POST['settingfile'],"w");
+		if ($fp) {
 			@fwrite($fp,$_POST['contents']);
-		@fclose($fp);
+			@fclose($fp);
+		}
 		print "File updated. <a href=\"".$_SERVER['php_self']."?settingfile=".$_POST['settingfile']."\">Go back</a>.";
 	}
 	else {	
@@ -40,7 +42,7 @@
 			</p>
 		</form>
 		
-	<?
+	<?php
 	}
 	$botTemplate = new Template("bot-template.html");
 			

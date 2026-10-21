@@ -6,7 +6,7 @@
 		var $filename;
 		var $templateContents;
 		
-		function Template ($templateFile, $render = true, $stylesheet = false) { # stylesheet parsing option possible in future
+		function __construct ($templateFile, $render = true, $stylesheet = false) { # stylesheet parsing option possible in future
 			$this->filename = $this->getTemplateRoot().$templateFile;
 			if ($render) {
 				$this->reloadTemplate();
@@ -23,7 +23,7 @@
 		function parseTemplate () {
 			foreach ($this->templateContents as $lineNumber => $line) {
 				
-				$line = preg_replace_callback("/\[input (.*?)\=(.*?)\]/si",array($this, dataCallBack), $line);
+				$line = preg_replace_callback("/\[input (.*?)\=(.*?)\]/si",array($this, 'dataCallBack'), $line);
 				
 				if (preg_match_all("/\[addtemplate\=(.*?)\]/si",$line,$matches)) {
 					foreach ($matches[1] as $match) {
@@ -32,10 +32,10 @@
 					}
 				}
 				
-				$line = preg_replace_callback("/\[special parse=(.*?) template=(.*?)\]/i", array($this, specialParse), $line);
+				$line = preg_replace_callback("/\[special parse=(.*?) template=(.*?)\]/i", array($this, 'specialParse'), $line);
 				
 				
-				$line = preg_replace_callback("/\[usercheck level=(.*?)\](.*?)\[endusercheck\]/i", array($this, userCheck), $line);
+				$line = preg_replace_callback("/\[usercheck level=(.*?)\](.*?)\[endusercheck\]/i", array($this, 'userCheck'), $line);
 		
 				$this->templateContents[$lineNumber] = $line;
 			}

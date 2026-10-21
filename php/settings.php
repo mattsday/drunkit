@@ -1,4 +1,4 @@
-<?
+<?php
 	require "modules/common.php";
 	require "modules/templates.php";
 
@@ -10,9 +10,9 @@
 		error("Not Authorised","You are not authorised to view this page. Please log in to an administrative account");
 	}
 	else if (@$_POST['a'] == "update") {
-		$keysIndex = "";
-		$valuesIndex = "";
-		$hash = "";
+		$keysIndex = array();
+		$valuesIndex = array();
+		$hash = array();
 		foreach ($_POST as $key => $value) {
 			if (($key != "a") && ($value) && ($key != "settingfile")) {
 				$keyArray = preg_split("/\-/", $key);
@@ -76,7 +76,7 @@
 			</p>
 		</form>
 		
-	<?
+	<?php
 	}
 	$botTemplate = new Template("bot-template.html");
 			

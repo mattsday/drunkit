@@ -11,13 +11,13 @@
 		var $hash;
 		var $filename;
 		
-		function settingsFile ($file) {
+		function __construct ($file) {
 			$this->filename = $file;
 			$this->reload();
 		}
 
 		function reload() {
-			$hash = "";
+			$hash = array();
 			$settingsHash = @file($this->filename);
 			if ($settingsHash) {
 				foreach ($settingsHash as $settingLine) {
@@ -58,8 +58,10 @@
 				}
 			}
 			$fp = @fopen($this->filename,"w");
+			if ($fp) {
 				@fwrite($fp,$output);
-			@fclose($fp);
+				@fclose($fp);
+			}
 		}
 
 		function write($key,$value) {
@@ -70,7 +72,7 @@
 	
 	
 	class ArticleFile extends SettingsFile {
-		function ArticleFile($articleId) {
+		function __construct($articleId) {
 			$this->filename = "content/articles/".$articleId.".txt";
 			$this->reload();
 			
@@ -78,7 +80,7 @@
 	}
 	
 	class UserInfo extends SettingsFile {
-		function UserInfo ($userName = "") {
+		function __construct ($userName = "") {
 			if (!$userName) {
 				$userName = getUserName();
 			}
